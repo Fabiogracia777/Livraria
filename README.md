@@ -1,2 +1,2 @@
-# JavaJDBC
-Exemplo de conexão com MySQL usando JDBC
+# Livraria
+Trabalho de Olinda
