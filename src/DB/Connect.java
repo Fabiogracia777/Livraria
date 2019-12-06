@@ -27,9 +27,9 @@ public class Connect {
             if (connection != null) {
                 Println.colored(LoadDriver.message, AnsiScape.ANSI_BLUE);
                 if (createDatabase(this.databaseName)) {
-                    Println.colored("Conectado com sucesso ao banco " + this.databaseName, AnsiScape.ANSI_BLUE);
+                    Println.colored("Conectado com sucesso ao banco " + this.databaseName, AnsiScape.ANSI_PURPLE);
                 } else {
-                    Println.colored("Falha ao conectar ao banco " + this.databaseName, AnsiScape.ANSI_RED);
+                    Println.colored("Falha ao conectar ao banco " + this.databaseName, AnsiScape.ANSI_YELLOW);
                 }
             }
         } catch (SQLException ex) {
