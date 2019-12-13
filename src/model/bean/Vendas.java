@@ -1,40 +1,26 @@
-
 package model.bean;
 
 public class Vendas {
-    
+    private int id;
     private Livro livro;
-    private Vendedor Vendedor;
+    private Vendedor vendedor;
     private int quantidade;
     private double precoVendido;
-    private int id;
 
-    public Livro getLivro() {
-        return livro;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setLivro(Livro livro) {
         this.livro = livro;
     }
 
-    public Vendedor getVendedor() {
-        return Vendedor;
-    }
-
-    public void setVendedor(Vendedor Vendedor) {
-        this.Vendedor = Vendedor;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
     }
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public double getPrecoVendido() {
-        return precoVendido;
     }
 
     public void setPrecoVendido(double precoVendido) {
@@ -45,11 +31,20 @@ public class Vendas {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Livro getLivro() {
+        return livro;
     }
-    
-    
-    
+
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public double getPrecoVendido() {
+        return precoVendido;
+    }
     
 }

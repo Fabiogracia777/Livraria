@@ -1,63 +1,68 @@
-
 package model.bean;
 
-
 public class Livro {
-    
-    private long ISBN;
-    private String Titulo;
-    private String Autor;
-    private int Paginas;
-    private double Preco;
-    private String Categoria;
+    private int id;
+    private String titulo;
+    private String autor;
+    private int paginas;
+    private double preco;
+    private String categoria;
+    private boolean status;
 
-    public long getISBN() {
-        return ISBN;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setISBN(long ISBN) {
-        this.ISBN = ISBN;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public void setPaginas(int paginas) {
+        this.paginas = paginas;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitulo() {
-        return Titulo;
-    }
-
-    public void setTitulo(String Titulo) {
-        this.Titulo = Titulo;
+        return titulo;
     }
 
     public String getAutor() {
-        return Autor;
-    }
-
-    public void setAutor(String Autor) {
-        this.Autor = Autor;
+        return autor;
     }
 
     public int getPaginas() {
-        return Paginas;
-    }
-
-    public void setPaginas(int Paginas) {
-        this.Paginas = Paginas;
+        return paginas;
     }
 
     public double getPreco() {
-        return Preco;
-    }
-
-    public void setPreco(double Preco) {
-        this.Preco = Preco;
+        return preco;
     }
 
     public String getCategoria() {
-        return Categoria;
+        return categoria;
     }
 
-    public void setCategoria(String Categoria) {
-        this.Categoria = Categoria;
+    public boolean isStatus() {
+        return status;
     }
-    
     
 }
