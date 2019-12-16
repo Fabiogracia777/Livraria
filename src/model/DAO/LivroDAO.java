@@ -1,53 +1,49 @@
-
 package model.DAO;
 
-
-
-    
-  
-
+import java.util.List;
+import model.bean.Livro;
+import DB.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.List;
-import javax.swing.JOptionPane;
-import model.bean.Vendedor;
-import DB.Connect;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class LivroDAO implements iDAO<Livro> {
 
-    private final String INSERT = "INSERT INTO vendedor(, NOME, ENDERECO, STATUS) VALUES (?, ?, ?, ?)";
-    private final String UPDATE = "UPDATE vendedor SET CPF=?, NOME=?, ENDERECO=?, STATUS=? WHERE ID =?";
-    private final String DELETE = "DELETE FROM vendedor WHERE ID =?";
-    private final String LISTALL = "SELECT * FROM vendedor";
-    private final String LISTBYID = "SELECT * FROM vendedor WHERE ID=?";
-    private final String LISTBYCPF = "SELECT * FROM vendedor WHERE CPF=?";
+    private final String INSERT = "INSERT INTO livro(AUTOR, TÍTULO, PRECO, STATUS, PÁGINA, CATEGORIA, ISBN) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private final String UPDATE = "UPDATE livro SET AUTOR=?, TÍTULO=?, PRECO=?, STATUS=?, PÁGINA=?, CATEGORIA=?, ISBN=?  WHERE ID =?";
+    private final String DELETE = "DELETE FROM livro WHERE ID =?";
+    private final String LISTALL = "SELECT * FROM livro";
+    private final String LISTBYID = "SELECT * FROM livro WHERE ID=?";
+    private final String LISTBYTITULO = "SELECT * FROM livro WHERE TÍTULO=?";
 
     private Connect conn = null;
     private Connection conexao = null;
 
-    @Override
-    public Vendedor inserir(Vendedor novoVendedor) {
+    public Livro inserir(Livro livro) {
         conexao = this.getConnect().connection;
-        if (novoVendedor != null && conexao != null) {
+        if (livro != null && conexao != null) {
             try {
                 PreparedStatement transacaoSQL;
                 transacaoSQL = conexao.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 
-                transacaoSQL.setString(1, novoVendedor.getCPF());
-                transacaoSQL.setString(2, novoVendedor.getNome());
-                transacaoSQL.setString(3, novoVendedor.getEndereco());
-                transacaoSQL.setBoolean(4, novoVendedor.isStatus());
+                transacaoSQL.setString(1, livro.getAutor());
+                transacaoSQL.setString(2, livro.getTitulo());
+                transacaoSQL.setString(3, livro.getCategoria());
+                transacaoSQL.setBoolean(4, livro.isStatus());
+                transacaoSQL.setInt(4, livro.getPaginas());
+                transacaoSQL.setDouble(4, livro.getPreco());
+                transacaoSQL.setInt(4, livro.getISBN());
 
                 transacaoSQL.execute();
-                JOptionPane.showMessageDialog(null, "Vendedor cadastrado com sucesso", "Registro inserido", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso", "Registro inserido", JOptionPane.INFORMATION_MESSAGE);
 
                 try (ResultSet generatedKeys = transacaoSQL.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        novoVendedor.setId(generatedKeys.getInt(1));
+                        livro.setId(generatedKeys.getInt(1));
                     } else {
                         throw new SQLException("Não foi possível recuperar o ID.");
                     }
@@ -56,30 +52,33 @@ public class LivroDAO implements iDAO<Livro> {
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o vendedor no banco de" + "dados. \n" + e.getMessage(), "Erro na transação SQL", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o livro no banco de" + "dados. \n" + e.getMessage(), "Erro na transação SQL", JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Os dados do vendedor não podem estar vazios.", "Vendedor não informado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Os dados do livro não podem estar vazios.", "Livro não informado", JOptionPane.ERROR_MESSAGE);
         }
 
-        return novoVendedor;
+        return livro;
     }
 
-    @Override
-    public Vendedor atualizar(Vendedor vendedorEditado) {
+    public Livro atualizar(Livro livroNovo) {
+
         conexao = this.getConnect().connection;
-        if (vendedorEditado != null && conexao != null) {
+        if (livroNovo != null && conexao != null) {
             try {
                 PreparedStatement transacaoSQL;
                 transacaoSQL = conexao.prepareStatement(UPDATE);
 
-                transacaoSQL.setString(1, vendedorEditado.getCPF());
-                transacaoSQL.setString(2, vendedorEditado.getNome());
-                transacaoSQL.setString(3, vendedorEditado.getEndereco());
-                transacaoSQL.setBoolean(4, vendedorEditado.isStatus());
-                
-                transacaoSQL.setInt(5, vendedorEditado.getId());
+                transacaoSQL.setString(1, livroNovo.getAutor());
+                transacaoSQL.setString(2, livroNovo.getTitulo());
+                transacaoSQL.setString(3, livroNovo.getCategoria());
+                transacaoSQL.setBoolean(4, livroNovo.isStatus());
+                transacaoSQL.setInt(4, livroNovo.getPaginas());
+                transacaoSQL.setDouble(4, livroNovo.getPreco());
+                transacaoSQL.setInt(4, livroNovo.getISBN());
+
+                transacaoSQL.setInt(5, livroNovo.getId());
 
                 int resultado = transacaoSQL.executeUpdate();
 
@@ -88,28 +87,27 @@ public class LivroDAO implements iDAO<Livro> {
                     throw new SQLException("Creating user failed, no rows affected.");
                 }
 
-                JOptionPane.showMessageDialog(null, "Vendedor atualizado com sucesso", "Registro atualizado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Livro atualizado com sucesso", "Registro atualizado", JOptionPane.INFORMATION_MESSAGE);
 
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o vendedor no banco de" + "dados. \n" + e.getMessage(), "Erro na transação SQL", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o Livro no banco de" + "dados. \n" + e.getMessage(), "Erro na transação SQL", JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Os dados do vendedor não podem estar vazios.", "Vendedor não informado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Os dados do Livro não podem estar vazios.", "Vendedor não informado", JOptionPane.ERROR_MESSAGE);
         }
 
-        return vendedorEditado;
+        return livroNovo;
     }
 
-    @Override
-    public void excluir(int idVendedor) {
-        
-        int confirmar = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este vendedor?", "Confirmar exclusão",
-			JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    public void excluir(int id) {
+
+        int confirmar = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este livro?", "Confirmar exclusão",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         // 0 - Sim  1 - Não
-        if(confirmar == 1) {
+        if (confirmar == 1) {
             return;
         }
         conexao = this.getConnect().connection;
@@ -118,7 +116,7 @@ public class LivroDAO implements iDAO<Livro> {
                 PreparedStatement transacaoSQL;
                 transacaoSQL = conexao.prepareStatement(DELETE);
 
-                transacaoSQL.setInt(1, idVendedor);
+                transacaoSQL.setInt(1, id);
 
                 boolean erroAoExcluir = transacaoSQL.execute();
 
@@ -127,25 +125,26 @@ public class LivroDAO implements iDAO<Livro> {
                     throw new SQLException("Creating user failed, no rows affected.");
                 }
 
-                JOptionPane.showMessageDialog(null, "Registro excluido", "Vendedor excluido com sucesso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registro excluido", "Livro excluido com sucesso", JOptionPane.INFORMATION_MESSAGE);
 
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao excluir do vendedor no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao excluir o livro no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Problemas de conexão", "Não foi possível se conectar ao banco.", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
-    @Override
-    public List<Vendedor> buscarTodos() {
+    public List<Livro> buscarTodos() {
+
         conexao = this.getConnect().connection;
 
         ResultSet resultado = null;
-        ArrayList<Vendedor> vendedores = new ArrayList<Vendedor>();
+        ArrayList<Livro> livros = new ArrayList<Livro>();
 
         if (conexao != null) {
             try {
@@ -155,17 +154,20 @@ public class LivroDAO implements iDAO<Livro> {
                 resultado = transacaoSQL.executeQuery();
 
                 while (resultado.next()) {
-                    Vendedor vendedorEncontrado = new Vendedor();
+                    Livro livroEncontrado = new Livro();
 
-                    vendedorEncontrado.setId(resultado.getInt("id"));
-                    vendedorEncontrado.setCPF(resultado.getString("CPF"));
-                    vendedorEncontrado.setNome(resultado.getString("nome"));
-                    vendedorEncontrado.setEndereco(resultado.getString("endereco"));
-                    vendedorEncontrado.setStatus(resultado.getBoolean("status"));
-                   
-                    vendedores.add(vendedorEncontrado);
+                    livroEncontrado.setId(resultado.getInt("id"));
+                    livroEncontrado.setAutor(resultado.getString("Autor"));
+                    livroEncontrado.setTitulo(resultado.getString("Título"));
+                    livroEncontrado.setCategoria(resultado.getString("Categoria"));
+                    livroEncontrado.setStatus(resultado.getBoolean("status"));
+                    livroEncontrado.setISBN(resultado.getInt("ISBN"));
+                    livroEncontrado.setPreco(resultado.getDouble("Preço"));
+                    livroEncontrado.setPaginas(resultado.getInt("Páginas"));
+
+                    livros.add(livroEncontrado);
                 }
-                
+
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
@@ -176,15 +178,15 @@ public class LivroDAO implements iDAO<Livro> {
             JOptionPane.showMessageDialog(null, "Problemas de conexão", "Não foi possível se conectar ao banco.", JOptionPane.ERROR_MESSAGE);
         }
 
-        return vendedores;
+        return livros;
     }
 
-    @Override
-    public Vendedor buscarPorId(int id) {
+    public Livro buscarPorId(int id) {
+
         conexao = this.getConnect().connection;
-        
+
         ResultSet resultado = null;
-        Vendedor vendedorEncontrado = new Vendedor();
+        Livro livroEncontrado = new Livro();
 
         if (conexao != null) {
             try {
@@ -196,70 +198,75 @@ public class LivroDAO implements iDAO<Livro> {
 
                 while (resultado.next()) {
 
-                    vendedorEncontrado.setId(resultado.getInt("id"));
-                    vendedorEncontrado.setCPF(resultado.getString("CPF"));
-                    vendedorEncontrado.setNome(resultado.getString("nome"));
-                    vendedorEncontrado.setEndereco(resultado.getString("endereco"));
-                    vendedorEncontrado.setStatus(resultado.getBoolean("status"));
-                   
+                    livroEncontrado.setId(resultado.getInt("id"));
+                    livroEncontrado.setAutor(resultado.getString("Autor"));
+                    livroEncontrado.setTitulo(resultado.getString("Título"));
+                    livroEncontrado.setCategoria(resultado.getString("Categoria"));
+                    livroEncontrado.setStatus(resultado.getBoolean("status"));
+                    livroEncontrado.setISBN(resultado.getInt("ISBN"));
+                    livroEncontrado.setPreco(resultado.getDouble("Preço"));
+                    livroEncontrado.setPaginas(resultado.getInt("Páginas"));
+
                 }
-                
+
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao procurar vendedor no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
+
         } else {
             JOptionPane.showMessageDialog(null, "Problemas de conexão", "Não foi possível se conectar ao banco.", JOptionPane.ERROR_MESSAGE);
         }
 
-        return vendedorEncontrado;
+        return livroEncontrado;
     }
-    
-    public Vendedor buscarPorCPF(String cpf) {
+
+    public Livro buscarPorTítulo(String Título) {
+
         conexao = this.getConnect().connection;
-        
+
         ResultSet resultado = null;
-        Vendedor vendedorEncontrado = new Vendedor();
+        Livro livroEncontrado = new Livro();
 
         if (conexao != null) {
             try {
                 PreparedStatement transacaoSQL;
-                transacaoSQL = conexao.prepareStatement(LISTBYCPF);
-                transacaoSQL.setString(1, cpf);
+                transacaoSQL = conexao.prepareStatement(LISTBYTITULO);
+                transacaoSQL.setString(1, Título);
 
                 resultado = transacaoSQL.executeQuery();
 
                 while (resultado.next()) {
 
-                    vendedorEncontrado.setId(resultado.getInt("id"));
-                    vendedorEncontrado.setCPF(resultado.getString("CPF"));
-                    vendedorEncontrado.setNome(resultado.getString("nome"));
-                    vendedorEncontrado.setEndereco(resultado.getString("endereco"));
-                    vendedorEncontrado.setStatus(resultado.getBoolean("status"));
-                   
+                    livroEncontrado.setId(resultado.getInt("id"));
+                    livroEncontrado.setAutor(resultado.getString("Autor"));
+                    livroEncontrado.setTitulo(resultado.getString("Título"));
+                    livroEncontrado.setCategoria(resultado.getString("Categoria"));
+                    livroEncontrado.setStatus(resultado.getBoolean("status"));
+                    livroEncontrado.setISBN(resultado.getInt("ISBN"));
+                    livroEncontrado.setPreco(resultado.getDouble("Preço"));
+                    livroEncontrado.setPaginas(resultado.getInt("Páginas"));
+
                 }
-                
+
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao procurar vendedor no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
+
         } else {
             JOptionPane.showMessageDialog(null, "Problemas de conexão", "Não foi possível se conectar ao banco.", JOptionPane.ERROR_MESSAGE);
         }
 
-        return vendedorEncontrado;
+        return livroEncontrado;
     }
 
     public Connect getConnect() {
-        this.conn = new Connect("root","","NovaLivraria");
+        this.conn = new Connect("root", "", "NovaLivraria");
         return this.conn;
     }
-
-}
-
-    
 }

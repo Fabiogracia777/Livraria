@@ -8,6 +8,7 @@ public class Livro {
     private double preco;
     private String categoria;
     private boolean status;
+    private int ISBN;
 
     public void setId(int id) {
         this.id = id;
@@ -63,6 +64,14 @@ public class Livro {
 
     public boolean isStatus() {
         return status;
+    }
+
+    public int getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(int ISBN) {
+        this.ISBN = ISBN;
     }
     
 }
