@@ -49,16 +49,17 @@ public class Iniciar extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Bonita", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Bonita", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
         jLabel1.setText("BooKStore");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 42, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("__________________");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 163, -1));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(240, 240, 240));
         jLabel4.setText("Cadastrar");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -72,8 +73,9 @@ public class Iniciar extends javax.swing.JFrame {
                 jLabel4MouseExited(evt);
             }
         });
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 140, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 140, 30));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(240, 240, 240));
         jLabel6.setText("Vender");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -81,9 +83,9 @@ public class Iniciar extends javax.swing.JFrame {
                 jLabel6MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 140, 30));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 140, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 530));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 530));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -91,20 +93,20 @@ public class Iniciar extends javax.swing.JFrame {
         jLabel2.setText("BooKStore");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 830, 60));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 840, 60));
 
         javax.swing.GroupLayout PainelDesktopLayout = new javax.swing.GroupLayout(PainelDesktop);
         PainelDesktop.setLayout(PainelDesktopLayout);
         PainelDesktopLayout.setHorizontalGroup(
             PainelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 830, Short.MAX_VALUE)
+            .addGap(0, 860, Short.MAX_VALUE)
         );
         PainelDesktopLayout.setVerticalGroup(
             PainelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 470, Short.MAX_VALUE)
         );
 
-        getContentPane().add(PainelDesktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 830, 470));
+        getContentPane().add(PainelDesktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 860, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

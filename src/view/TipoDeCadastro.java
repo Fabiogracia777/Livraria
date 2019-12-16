@@ -105,6 +105,17 @@ public class TipoDeCadastro extends javax.swing.JInternalFrame {
                 this.PainelDesktop.removeAll();
                 this.PainelDesktop.add(TelaVendedor);
                 TelaVendedor.setVisible(true);
+                
+            
+        }
+        
+        switch (TipoDeCadastro.getSelectedItem().toString()){
+        case "Livro":
+                JInternalFrame TelaLivro = new TelaCadastroLivro();
+                
+                this.PainelDesktop.removeAll();
+                this.PainelDesktop.add(TelaLivro);
+                TelaLivro.setVisible(true);
         }
         
     }//GEN-LAST:event_MostrarTelaDeCadastroActionPerformed

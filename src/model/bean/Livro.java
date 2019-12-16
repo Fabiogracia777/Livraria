@@ -2,13 +2,14 @@ package model.bean;
 
 public class Livro {
     private int id;
+    private int ISBN;
     private String titulo;
     private String autor;
     private int paginas;
     private double preco;
     private String categoria;
     private boolean status;
-    private int ISBN;
+    
 
     public void setId(int id) {
         this.id = id;

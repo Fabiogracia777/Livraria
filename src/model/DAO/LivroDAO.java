@@ -18,7 +18,7 @@ public class LivroDAO implements iDAO<Livro> {
     private final String DELETE = "DELETE FROM livro WHERE ID =?";
     private final String LISTALL = "SELECT * FROM livro";
     private final String LISTBYID = "SELECT * FROM livro WHERE ID=?";
-    private final String LISTBYTITULO = "SELECT * FROM livro WHERE TÍTULO=?";
+    private final String LISTBYISBN = "SELECT * FROM livro WHERE ISBN=?";
 
     private Connect conn = null;
     private Connection conexao = null;
@@ -223,7 +223,7 @@ public class LivroDAO implements iDAO<Livro> {
         return livroEncontrado;
     }
 
-    public Livro buscarPorTítulo(String Título) {
+    public Livro buscarPorISBN(int ISBN) {
 
         conexao = this.getConnect().connection;
 
@@ -233,19 +233,20 @@ public class LivroDAO implements iDAO<Livro> {
         if (conexao != null) {
             try {
                 PreparedStatement transacaoSQL;
-                transacaoSQL = conexao.prepareStatement(LISTBYTITULO);
-                transacaoSQL.setString(1, Título);
+                transacaoSQL = conexao.prepareStatement(LISTBYISBN);
+                transacaoSQL.setInt(1, ISBN);
 
                 resultado = transacaoSQL.executeQuery();
 
                 while (resultado.next()) {
 
                     livroEncontrado.setId(resultado.getInt("id"));
-                    livroEncontrado.setAutor(resultado.getString("Autor"));
+                    livroEncontrado.setISBN(resultado.getInt("ISBN"));
                     livroEncontrado.setTitulo(resultado.getString("Título"));
+                    livroEncontrado.setAutor(resultado.getString("Autor"));
+                    
                     livroEncontrado.setCategoria(resultado.getString("Categoria"));
                     livroEncontrado.setStatus(resultado.getBoolean("status"));
-                    livroEncontrado.setISBN(resultado.getInt("ISBN"));
                     livroEncontrado.setPreco(resultado.getDouble("Preço"));
                     livroEncontrado.setPaginas(resultado.getInt("Páginas"));
 
@@ -269,4 +270,6 @@ public class LivroDAO implements iDAO<Livro> {
         this.conn = new Connect("root", "", "NovaLivraria");
         return this.conn;
     }
-}
+
+   
+    }

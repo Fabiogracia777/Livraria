@@ -8,6 +8,6 @@ public interface iDAO<T> {
     void excluir(int id);
     List<T> buscarTodos();
     T buscarPorId(int id);
-    T buscarPorCPF(String cpf);
+    
     
 }
