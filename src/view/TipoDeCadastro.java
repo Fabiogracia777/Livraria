@@ -6,21 +6,25 @@
 package view;
 
 import java.awt.Dimension;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import model.bean.Vendedor;
 
 /**
  *
  * @author USUARIO
  */
-public class NovoJInternalFrame extends javax.swing.JInternalFrame {
+public class TipoDeCadastro extends javax.swing.JInternalFrame {
+    private JDesktopPane PainelDesktop;
 
     /**
      * Creates new form NovoJInternalFrame
      */
     
     
-    public NovoJInternalFrame() {
+    public TipoDeCadastro(JDesktopPane pd) {
         initComponents();
+        this.PainelDesktop=pd;
     }
 
     /**
@@ -33,31 +37,26 @@ public class NovoJInternalFrame extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        TipoDeCadastro = new javax.swing.JComboBox<>();
+        MostrarTelaDeCadastro = new javax.swing.JButton();
 
         setBorder(null);
         setOpaque(true);
 
         jLabel1.setText("O QUE DESEJA CADASTRAR");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livro", "Vendedor", "Cliente" }));
-        jComboBox1.setBorder(null);
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        TipoDeCadastro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livro", "Vendedor", "Cliente" }));
+        TipoDeCadastro.setBorder(null);
+        TipoDeCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                TipoDeCadastroActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Pronto");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        MostrarTelaDeCadastro.setText("Pronto");
+        MostrarTelaDeCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                MostrarTelaDeCadastroActionPerformed(evt);
             }
         });
 
@@ -71,10 +70,10 @@ public class NovoJInternalFrame extends javax.swing.JInternalFrame {
                         .addGap(137, 137, 137)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(TipoDeCadastro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(173, 173, 173)
-                        .addComponent(jButton1)))
+                        .addComponent(MostrarTelaDeCadastro)))
                 .addContainerGap(137, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -83,32 +82,37 @@ public class NovoJInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TipoDeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(MostrarTelaDeCadastro)
                 .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void TipoDeCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoDeCadastroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_TipoDeCadastroActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void MostrarTelaDeCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MostrarTelaDeCadastroActionPerformed
        
-    }//GEN-LAST:event_jButton1ActionPerformed
+        switch (TipoDeCadastro.getSelectedItem().toString()){
+             
+            case "Vendedor":
+                JInternalFrame TelaVendedor = new TelaCadastroVendedor();
+                
+                this.PainelDesktop.removeAll();
+                this.PainelDesktop.add(TelaVendedor);
+                TelaVendedor.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_MostrarTelaDeCadastroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton MostrarTelaDeCadastro;
+    private javax.swing.JComboBox<String> TipoDeCadastro;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

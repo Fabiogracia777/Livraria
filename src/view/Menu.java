@@ -37,7 +37,6 @@ public class Menu extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         cadastroLivro = new javax.swing.JMenuItem();
         cadastroVendedor = new javax.swing.JMenuItem();
-        cadastroCliente = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -92,10 +91,6 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         fileMenu.add(cadastroVendedor);
-
-        cadastroCliente.setMnemonic('a');
-        cadastroCliente.setText("Cliente");
-        fileMenu.add(cadastroCliente);
 
         menuBar.add(fileMenu);
 
@@ -201,7 +196,6 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem cadastroCliente;
     private javax.swing.JMenuItem cadastroLivro;
     private javax.swing.JMenuItem cadastroVendedor;
     private javax.swing.JMenuItem copyMenuItem;
