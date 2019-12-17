@@ -352,14 +352,14 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
 
         getContentPane().add(DadosDoLivro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 176, -1, -1));
 
-        tabelaDeLivros.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
+        tabelaDeLivros.setModel(tabelaModelo);
+        tabelaDeLivros.getTableHeader().setReorderingAllowed(false);
+        tabelaDeLivros.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                preencherSelecionado(e);
             }
-        ));
+        });
         jScrollPane1.setViewportView(tabelaDeLivros);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 734, 150));
