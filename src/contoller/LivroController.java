@@ -58,7 +58,7 @@ public class LivroController {
         if( livro.getId() != 0 ) {
             lDAO.excluir(livro.getId());
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível excluir as informações.\nVendedor não localizado.", "Erro ao excluir", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir as informações.\nLivro não localizado.", "Erro ao excluir", JOptionPane.ERROR_MESSAGE);
         }
         this.listarTodos(modeloTabela);
     }

@@ -54,6 +54,7 @@ public class CreateDB {
                 + "  Paginas int(11) NOT NULL,"
                 + "  Preco double NOT NULL,"
                 + "  Categoria varchar(50) NOT NULL,"
+                + "  status int(1) NOT NULL DEFAULT 1,"
                 + "  PRIMARY KEY (id),"
                 + "  KEY ISBN (ISBN)"
                 + ") ;";

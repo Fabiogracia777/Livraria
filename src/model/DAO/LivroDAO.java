@@ -13,8 +13,8 @@ import javax.swing.JOptionPane;
 
 public class LivroDAO implements iDAO<Livro> {
 
-    private final String INSERT = "INSERT INTO livro(AUTOR, TÍTULO, PRECO, STATUS, PÁGINA, CATEGORIA, ISBN) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private final String UPDATE = "UPDATE livro SET AUTOR=?, TÍTULO=?, PRECO=?, STATUS=?, PÁGINA=?, CATEGORIA=?, ISBN=?  WHERE ID =?";
+    private final String INSERT = "INSERT INTO livro(AUTOR, TITULO, PRECO, STATUS, PAGINAS, CATEGORIA, ISBN) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private final String UPDATE = "UPDATE livro SET AUTOR=?, TITULO=?, PRECO=?, STATUS=?, PAGINAS=?, CATEGORIA=?, ISBN=?  WHERE ID =?";
     private final String DELETE = "DELETE FROM livro WHERE ID =?";
     private final String LISTALL = "SELECT * FROM livro";
     private final String LISTBYID = "SELECT * FROM livro WHERE ID=?";
@@ -32,11 +32,12 @@ public class LivroDAO implements iDAO<Livro> {
 
                 transacaoSQL.setString(1, livro.getAutor());
                 transacaoSQL.setString(2, livro.getTitulo());
-                transacaoSQL.setString(3, livro.getCategoria());
+                transacaoSQL.setDouble(3, livro.getPreco());
                 transacaoSQL.setBoolean(4, livro.isStatus());
-                transacaoSQL.setInt(4, livro.getPaginas());
-                transacaoSQL.setDouble(4, livro.getPreco());
-                transacaoSQL.setInt(4, livro.getISBN());
+                transacaoSQL.setInt(5, livro.getPaginas());
+                transacaoSQL.setString(6, livro.getCategoria());
+
+                transacaoSQL.setInt(7, livro.getISBN());
 
                 transacaoSQL.execute();
                 JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso", "Registro inserido", JOptionPane.INFORMATION_MESSAGE);
@@ -158,12 +159,12 @@ public class LivroDAO implements iDAO<Livro> {
 
                     livroEncontrado.setId(resultado.getInt("id"));
                     livroEncontrado.setAutor(resultado.getString("Autor"));
-                    livroEncontrado.setTitulo(resultado.getString("Título"));
+                    livroEncontrado.setTitulo(resultado.getString("Titulo"));
                     livroEncontrado.setCategoria(resultado.getString("Categoria"));
                     livroEncontrado.setStatus(resultado.getBoolean("status"));
                     livroEncontrado.setISBN(resultado.getInt("ISBN"));
-                    livroEncontrado.setPreco(resultado.getDouble("Preço"));
-                    livroEncontrado.setPaginas(resultado.getInt("Páginas"));
+                    livroEncontrado.setPreco(resultado.getDouble("Preco"));
+                    livroEncontrado.setPaginas(resultado.getInt("Paginas"));
 
                     livros.add(livroEncontrado);
                 }
@@ -244,7 +245,7 @@ public class LivroDAO implements iDAO<Livro> {
                     livroEncontrado.setISBN(resultado.getInt("ISBN"));
                     livroEncontrado.setTitulo(resultado.getString("Título"));
                     livroEncontrado.setAutor(resultado.getString("Autor"));
-                    
+
                     livroEncontrado.setCategoria(resultado.getString("Categoria"));
                     livroEncontrado.setStatus(resultado.getBoolean("status"));
                     livroEncontrado.setPreco(resultado.getDouble("Preço"));
@@ -271,5 +272,4 @@ public class LivroDAO implements iDAO<Livro> {
         return this.conn;
     }
 
-   
-    }
+}

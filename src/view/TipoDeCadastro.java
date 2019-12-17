@@ -39,19 +39,24 @@ public class TipoDeCadastro extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         TipoDeCadastro = new javax.swing.JComboBox<>();
         MostrarTelaDeCadastro = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setBorder(null);
         setOpaque(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("O QUE DESEJA CADASTRAR");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, -1, -1));
 
-        TipoDeCadastro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livro", "Vendedor", "Cliente" }));
+        TipoDeCadastro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livro", "Vendedor" }));
         TipoDeCadastro.setBorder(null);
         TipoDeCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TipoDeCadastroActionPerformed(evt);
             }
         });
+        getContentPane().add(TipoDeCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 57, 136, -1));
 
         MostrarTelaDeCadastro.setText("Pronto");
         MostrarTelaDeCadastro.addActionListener(new java.awt.event.ActionListener() {
@@ -59,34 +64,11 @@ public class TipoDeCadastro extends javax.swing.JInternalFrame {
                 MostrarTelaDeCadastroActionPerformed(evt);
             }
         });
+        getContentPane().add(MostrarTelaDeCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(173, 118, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TipoDeCadastro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(MostrarTelaDeCadastro)))
-                .addContainerGap(137, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(TipoDeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(MostrarTelaDeCadastro)
-                .addGap(30, 30, 30))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/thinkstockphotos-541137274-e1481892729817.jpg"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, -70, 480, 260));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -125,5 +107,6 @@ public class TipoDeCadastro extends javax.swing.JInternalFrame {
     private javax.swing.JButton MostrarTelaDeCadastro;
     private javax.swing.JComboBox<String> TipoDeCadastro;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

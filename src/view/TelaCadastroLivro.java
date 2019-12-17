@@ -167,7 +167,6 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
         BTNExcluir = new javax.swing.JButton();
         BTNSair = new javax.swing.JButton();
         DadosDoLivro = new javax.swing.JPanel();
-        statusLista = new javax.swing.JTextField();
         Status = new javax.swing.JLabel();
         CategoriasText = new javax.swing.JTextField();
         PrecoText = new javax.swing.JTextField();
@@ -181,10 +180,12 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
         Paginas = new javax.swing.JLabel();
         Preco = new javax.swing.JLabel();
         Categorias = new javax.swing.JLabel();
+        statusLista = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TabelaDeLivros = new javax.swing.JTable();
+        tabelaDeLivros = new javax.swing.JTable();
 
-        setPreferredSize(new java.awt.Dimension(770, 398));
+        setPreferredSize(new java.awt.Dimension(770, 505));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PainelDeFunçoes.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
@@ -256,6 +257,8 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
                 .addGap(38, 38, 38))
         );
 
+        getContentPane().add(PainelDeFunçoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(583, 177, -1, -1));
+
         DadosDoLivro.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do livro"));
 
         Status.setText("STATUS");
@@ -277,6 +280,8 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
         Preco.setText("PREÇO");
 
         Categorias.setText("CATEGORIAS");
+
+        statusLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disponível", "Indisponível" }));
 
         javax.swing.GroupLayout DadosDoLivroLayout = new javax.swing.GroupLayout(DadosDoLivro);
         DadosDoLivro.setLayout(DadosDoLivroLayout);
@@ -340,43 +345,24 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
                     .addComponent(Categorias))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DadosDoLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(statusLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Status))
-                .addContainerGap(57, Short.MAX_VALUE))
+                    .addComponent(Status)
+                    .addComponent(statusLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
-        TabelaDeLivros.setModel(modeloTabela2);
-        jScrollPane1.setViewportView(TabelaDeLivros);
+        getContentPane().add(DadosDoLivro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 176, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(DadosDoLivro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(PainelDeFunçoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(DadosDoLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(PainelDeFunçoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))))
-        );
+        tabelaDeLivros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tabelaDeLivros);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 734, 150));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -387,18 +373,85 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
 
     private void BTNSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalvarActionPerformed
         
+         if (!this.podeEditar) {
+            JOptionPane.showMessageDialog(this, "Selecione um livro na tabela ou clique em NOVO.\nÉ preciso preencher todos os campos.");
+            return;
+        }
+
+        int id = lSelecionado.getId();
+        int ISBN = Integer.parseInt(ISBNText.getText());
+        String titulo = TituloText.getText();
+        String autor = AutorText.getText();
+        int paginas = Integer.parseInt(PaginasText.getText());
+        String categoria = CategoriasText.getText();
+        double preco = Double.parseDouble(PrecoText.getText());
+        boolean status = statusLista.getSelectedItem().toString().equals("Disponível");
+        
+        //INSERT INTO livro(ISBN, TITULO, AUTOR, PAGINAS, PRECO, CATEGORIA, STATUS) VALUES (?, ?, ?, ?, ?, ?, ?)
+
+        this.preencherLivro(lSelecionado, id, ISBN, titulo, autor, paginas, categoria, preco, status);
+
+        if (lSelecionado != null && !(titulo.equals("") || autor.equals(""))) {
+            System.out.println(lSelecionado);
+            if (this.tabelaModelo == null) {
+                System.out.println("A tabela é nula");
+            }
+            if (lSelecionado.getId() != 0) {
+                // atualizar
+                lController.salvar(this.tabelaModelo, lSelecionado, false);
+            } else {
+                // criar novo
+                lController.salvar(this.tabelaModelo, lSelecionado, true);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "É preciso preencher todos os campos.");
+        }
+        
+        
+        limparCampos();
     }//GEN-LAST:event_BTNSalvarActionPerformed
 
     private void BTNNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNNovoActionPerformed
-        // TODO add your handling code here:
+        this.habilitarCamposEdicao();
+        this.ISBNText.requestFocus();
     }//GEN-LAST:event_BTNNovoActionPerformed
 
     private void BTNProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNProcurarActionPerformed
-        // TODO add your handling code here:
+         Object[] possibilities = {"Todos", "Pelo Código", "Pelo ISBN"};
+        String escolha = (String) JOptionPane.showInputDialog(
+                this,
+                "Escolha o tipo de busca\n"
+                + "que deseja efetuar",
+                "Buscar Livro",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                possibilities,
+                possibilities[0]);
+        
+        escolha = escolha == null ? "" : escolha;
+
+        switch (escolha) {
+            case "Pelo Código":
+                int id = Integer.parseInt(JOptionPane.showInputDialog(this, "Código do Livro: "));
+                lController.listarPorId(tabelaModelo, id);
+                break;
+            case "Pelo ISBN":
+                int ISBN = Integer.parseInt(JOptionPane.showInputDialog(this, "ISBN do Livro: "));
+                lController.listarPorISBN(tabelaModelo, ISBN);
+                break;
+            default:
+                lController.listarTodos(tabelaModelo);
+        }
     }//GEN-LAST:event_BTNProcurarActionPerformed
 
     private void BTNExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNExcluirActionPerformed
-        // TODO add your handling code here:
+        if (lSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "O livro selecionado não existe no banco de dados.\nTente selecionar um livro da tabela abaixo." );
+        } else {
+            lController.excluir(tabelaModelo, lSelecionado);
+        }
+
+        limparCampos();
     }//GEN-LAST:event_BTNExcluirActionPerformed
 
     private void BTNSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSairActionPerformed
@@ -425,10 +478,10 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Preco;
     private javax.swing.JTextField PrecoText;
     private javax.swing.JLabel Status;
-    private javax.swing.JTable TabelaDeLivros;
     private javax.swing.JLabel Titulo;
     private javax.swing.JTextField TituloText;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField statusLista;
+    private javax.swing.JComboBox<String> statusLista;
+    private javax.swing.JTable tabelaDeLivros;
     // End of variables declaration//GEN-END:variables
 }
