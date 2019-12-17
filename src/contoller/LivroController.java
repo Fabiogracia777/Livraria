@@ -9,7 +9,7 @@ import model.DAO.LivroDAO;
 public class LivroController {
 
     private Livro LivroSelecionado;
-    private List<Livro> tabelaDeVendedores;
+    private List<Livro> tabelaDeLivros;
     private LivroDAO lDAO;
 
     public LivroController() {

@@ -85,7 +85,7 @@ public class Iniciar extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 140, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 530));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 610));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -93,20 +93,20 @@ public class Iniciar extends javax.swing.JFrame {
         jLabel2.setText("BooKStore");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 840, 60));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 890, 60));
 
         javax.swing.GroupLayout PainelDesktopLayout = new javax.swing.GroupLayout(PainelDesktop);
         PainelDesktop.setLayout(PainelDesktopLayout);
         PainelDesktopLayout.setHorizontalGroup(
             PainelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 860, Short.MAX_VALUE)
+            .addGap(0, 890, Short.MAX_VALUE)
         );
         PainelDesktopLayout.setVerticalGroup(
             PainelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
+            .addGap(0, 550, Short.MAX_VALUE)
         );
 
-        getContentPane().add(PainelDesktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 860, 470));
+        getContentPane().add(PainelDesktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 890, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

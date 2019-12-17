@@ -1,7 +1,7 @@
 package livraria;
 
 import DB.Connect;
-import view.Menu;
+import view.Iniciar;
 
 public class Livraria {
 
@@ -10,8 +10,8 @@ public class Livraria {
         new Connect("root","","NovaLivraria");
         
         // Abrir tela de Menu
-        Menu viewMenu = new Menu();
-        viewMenu.setVisible(true);
+        Iniciar viewIniciar = new Iniciar();
+        viewIniciar.setVisible(true);
     }
     
 }
