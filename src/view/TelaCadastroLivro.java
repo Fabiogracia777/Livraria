@@ -455,7 +455,7 @@ public class TelaCadastroLivro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BTNExcluirActionPerformed
 
     private void BTNSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSairActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_BTNSairActionPerformed
 
 

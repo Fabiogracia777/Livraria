@@ -46,6 +46,8 @@ public class CreateDB {
                 + "  PRIMARY KEY (id)"
                 + ") ;";
 
+        
+        //Adicionei o status, pode dar erro
         String tabelaLivro = "CREATE TABLE IF NOT EXISTS livro ("
                 + "  id int(11) NOT NULL AUTO_INCREMENT,"
                 + "  ISBN int(11) NOT NULL,"
@@ -54,7 +56,7 @@ public class CreateDB {
                 + "  Paginas int(11) NOT NULL,"
                 + "  Preco double NOT NULL,"
                 + "  Categoria varchar(50) NOT NULL,"
-                + "  status int(1) NOT NULL DEFAULT 1,"
+                + "  Status boolean NOT NULL,"
                 + "  PRIMARY KEY (id),"
                 + "  KEY ISBN (ISBN)"
                 + ") ;";

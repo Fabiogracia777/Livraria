@@ -1,7 +1,5 @@
 package model.DAO;
 
-import java.util.List;
-import model.bean.Livro;
 import DB.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import model.bean.Livro;
+import model.bean.Vendedor;
 
 public class LivroDAO implements iDAO<Livro> {
 
-    private final String INSERT = "INSERT INTO livro(AUTOR, TITULO, PRECO, STATUS, PAGINAS, CATEGORIA, ISBN) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private final String UPDATE = "UPDATE livro SET AUTOR=?, TITULO=?, PRECO=?, STATUS=?, PAGINAS=?, CATEGORIA=?, ISBN=?  WHERE ID =?";
+    private final String INSERT = "INSERT INTO livro(ISBN, TITULO, AUTOR, PAGINAS, PRECO, CATEGORIA, STATUS) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private final String UPDATE = "UPDATE vendedor SET ISBN=?, TÍTULO=?, AUTOR=?, PAGINAS=?, PREÇO=?, STATUS=? WHERE ID =?";
     private final String DELETE = "DELETE FROM livro WHERE ID =?";
     private final String LISTALL = "SELECT * FROM livro";
     private final String LISTBYID = "SELECT * FROM livro WHERE ID=?";
@@ -23,28 +24,33 @@ public class LivroDAO implements iDAO<Livro> {
     private Connect conn = null;
     private Connection conexao = null;
 
-    public Livro inserir(Livro livro) {
+    @Override
+    public Livro inserir(Livro novoLivro) {
         conexao = this.getConnect().connection;
-        if (livro != null && conexao != null) {
+        if (novoLivro != null && conexao != null) {
             try {
                 PreparedStatement transacaoSQL;
                 transacaoSQL = conexao.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+                
+                //INSERT INTO livro(ISBN, TITULO, AUTOR, PAGINAS, PRECO, CATEGORIA, STATUS) VALUES (?, ?, ?, ?, ?, ?, ?)
 
-                transacaoSQL.setString(1, livro.getAutor());
-                transacaoSQL.setString(2, livro.getTitulo());
-                transacaoSQL.setDouble(3, livro.getPreco());
-                transacaoSQL.setBoolean(4, livro.isStatus());
-                transacaoSQL.setInt(5, livro.getPaginas());
-                transacaoSQL.setString(6, livro.getCategoria());
-
-                transacaoSQL.setInt(7, livro.getISBN());
+                transacaoSQL.setInt(1, novoLivro.getISBN());
+                transacaoSQL.setString(2, novoLivro.getTitulo());
+                transacaoSQL.setString(3, novoLivro.getAutor());
+                transacaoSQL.setInt(4, novoLivro.getPaginas());
+                transacaoSQL.setDouble(5, novoLivro.getPreco());
+                transacaoSQL.setString(6, novoLivro.getCategoria());
+                transacaoSQL.setBoolean(7, novoLivro.isStatus());
+                
+                System.out.println(transacaoSQL.toString());
+                
 
                 transacaoSQL.execute();
                 JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso", "Registro inserido", JOptionPane.INFORMATION_MESSAGE);
 
                 try (ResultSet generatedKeys = transacaoSQL.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        livro.setId(generatedKeys.getInt(1));
+                        novoLivro.setId(generatedKeys.getInt(1));
                     } else {
                         throw new SQLException("Não foi possível recuperar o ID.");
                     }
@@ -53,33 +59,32 @@ public class LivroDAO implements iDAO<Livro> {
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o livro no banco de" + "dados. \n" + e.getMessage(), "Erro na transação SQL", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o livro no banco de " + "dados. \n" + e.getMessage(), "Erro na transação SQL", JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Os dados do livro não podem estar vazios.", "Livro não informado", JOptionPane.ERROR_MESSAGE);
         }
 
-        return livro;
+        return novoLivro;
     }
 
-    public Livro atualizar(Livro livroNovo) {
-
-        conexao = this.getConnect().connection;
-        if (livroNovo != null && conexao != null) {
+    @Override
+    public Livro atualizar(Livro livroEditado) {
+        
+       conexao = this.getConnect().connection;
+        if (livroEditado != null && conexao != null) {
             try {
                 PreparedStatement transacaoSQL;
                 transacaoSQL = conexao.prepareStatement(UPDATE);
 
-                transacaoSQL.setString(1, livroNovo.getAutor());
-                transacaoSQL.setString(2, livroNovo.getTitulo());
-                transacaoSQL.setString(3, livroNovo.getCategoria());
-                transacaoSQL.setBoolean(4, livroNovo.isStatus());
-                transacaoSQL.setInt(4, livroNovo.getPaginas());
-                transacaoSQL.setDouble(4, livroNovo.getPreco());
-                transacaoSQL.setInt(4, livroNovo.getISBN());
-
-                transacaoSQL.setInt(5, livroNovo.getId());
+                transacaoSQL.setInt(1, livroEditado.getISBN());
+                transacaoSQL.setString(2, livroEditado.getTitulo());
+                transacaoSQL.setString(3, livroEditado.getAutor());
+                transacaoSQL.setInt(4, livroEditado.getPaginas());
+                transacaoSQL.setDouble(5, livroEditado.getPreco());
+                transacaoSQL.setString(6, livroEditado.getCategoria());
+                transacaoSQL.setBoolean(7, livroEditado.isStatus());
 
                 int resultado = transacaoSQL.executeUpdate();
 
@@ -93,22 +98,22 @@ public class LivroDAO implements iDAO<Livro> {
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o Livro no banco de" + "dados. \n" + e.getMessage(), "Erro na transação SQL", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o livro no banco de" + "dados. \n" + e.getMessage(), "Erro na transação SQL", JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Os dados do Livro não podem estar vazios.", "Vendedor não informado", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Os dados do livro não podem estar vazios.", "Livro não informado", JOptionPane.ERROR_MESSAGE);
         }
 
-        return livroNovo;
+        return livroEditado;
     }
 
-    public void excluir(int id) {
-
+    @Override
+    public void excluir(int idLivro) {
         int confirmar = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este livro?", "Confirmar exclusão",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         // 0 - Sim  1 - Não
-        if (confirmar == 1) {
+        if(confirmar == 1) {
             return;
         }
         conexao = this.getConnect().connection;
@@ -117,7 +122,7 @@ public class LivroDAO implements iDAO<Livro> {
                 PreparedStatement transacaoSQL;
                 transacaoSQL = conexao.prepareStatement(DELETE);
 
-                transacaoSQL.setInt(1, id);
+                transacaoSQL.setInt(1, idLivro);
 
                 boolean erroAoExcluir = transacaoSQL.execute();
 
@@ -131,18 +136,17 @@ public class LivroDAO implements iDAO<Livro> {
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao excluir o livro no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao excluir livro no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Problemas de conexão", "Não foi possível se conectar ao banco.", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
+    @Override
     public List<Livro> buscarTodos() {
-
-        conexao = this.getConnect().connection;
+       conexao = this.getConnect().connection;
 
         ResultSet resultado = null;
         ArrayList<Livro> livros = new ArrayList<Livro>();
@@ -158,21 +162,22 @@ public class LivroDAO implements iDAO<Livro> {
                     Livro livroEncontrado = new Livro();
 
                     livroEncontrado.setId(resultado.getInt("id"));
-                    livroEncontrado.setAutor(resultado.getString("Autor"));
-                    livroEncontrado.setTitulo(resultado.getString("Titulo"));
-                    livroEncontrado.setCategoria(resultado.getString("Categoria"));
+                    livroEncontrado.setISBN(Integer.parseInt(resultado.getString("ISBN")));
+                    livroEncontrado.setTitulo(resultado.getString("titulo"));
+                    livroEncontrado.setAutor(resultado.getString("autor"));
+                    livroEncontrado.setPaginas(Integer.parseInt(resultado.getString("paginas")));
+                    livroEncontrado.setCategoria(resultado.getString("categoria"));
+                    livroEncontrado.setPreco(Double.parseDouble(resultado.getString("preco")));
                     livroEncontrado.setStatus(resultado.getBoolean("status"));
-                    livroEncontrado.setISBN(resultado.getInt("ISBN"));
-                    livroEncontrado.setPreco(resultado.getDouble("Preco"));
-                    livroEncontrado.setPaginas(resultado.getInt("Paginas"));
-
+                   
                     livros.add(livroEncontrado);
+                    
                 }
-
+                
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao procurar vendedores no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao procurar livros no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
         } else {
@@ -182,10 +187,11 @@ public class LivroDAO implements iDAO<Livro> {
         return livros;
     }
 
+
+    @Override
     public Livro buscarPorId(int id) {
-
-        conexao = this.getConnect().connection;
-
+         conexao = this.getConnect().connection;
+        
         ResultSet resultado = null;
         Livro livroEncontrado = new Livro();
 
@@ -200,34 +206,32 @@ public class LivroDAO implements iDAO<Livro> {
                 while (resultado.next()) {
 
                     livroEncontrado.setId(resultado.getInt("id"));
-                    livroEncontrado.setAutor(resultado.getString("Autor"));
-                    livroEncontrado.setTitulo(resultado.getString("Título"));
-                    livroEncontrado.setCategoria(resultado.getString("Categoria"));
-                    livroEncontrado.setStatus(resultado.getBoolean("status"));
-                    livroEncontrado.setISBN(resultado.getInt("ISBN"));
-                    livroEncontrado.setPreco(resultado.getDouble("Preço"));
-                    livroEncontrado.setPaginas(resultado.getInt("Páginas"));
-
+                    livroEncontrado.setISBN(Integer.parseInt(resultado.getString("ISBN")));
+                    livroEncontrado.setTitulo(resultado.getString("titulo"));
+                    livroEncontrado.setAutor(resultado.getString("autor"));
+                    livroEncontrado.setPaginas(Integer.parseInt(resultado.getString("paginas")));
+                    livroEncontrado.setCategoria(resultado.getString("categoria"));
+                    livroEncontrado.setPreco(Double.parseDouble(resultado.getString("preco")));
+                    livroEncontrado.setStatus(resultado.getBoolean("status"));;
+                   
                 }
-
+                
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao procurar vendedor no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao procurar livro no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Problemas de conexão", "Não foi possível se conectar ao banco.", JOptionPane.ERROR_MESSAGE);
         }
 
         return livroEncontrado;
     }
-
+    
     public Livro buscarPorISBN(int ISBN) {
-
         conexao = this.getConnect().connection;
-
+        
         ResultSet resultado = null;
         Livro livroEncontrado = new Livro();
 
@@ -242,24 +246,22 @@ public class LivroDAO implements iDAO<Livro> {
                 while (resultado.next()) {
 
                     livroEncontrado.setId(resultado.getInt("id"));
-                    livroEncontrado.setISBN(resultado.getInt("ISBN"));
-                    livroEncontrado.setTitulo(resultado.getString("Título"));
-                    livroEncontrado.setAutor(resultado.getString("Autor"));
-
-                    livroEncontrado.setCategoria(resultado.getString("Categoria"));
-                    livroEncontrado.setStatus(resultado.getBoolean("status"));
-                    livroEncontrado.setPreco(resultado.getDouble("Preço"));
-                    livroEncontrado.setPaginas(resultado.getInt("Páginas"));
-
+                    livroEncontrado.setISBN(Integer.parseInt(resultado.getString("ISBN")));
+                    livroEncontrado.setTitulo(resultado.getString("titulo"));
+                    livroEncontrado.setAutor(resultado.getString("autor"));
+                    livroEncontrado.setPaginas(Integer.parseInt(resultado.getString("paginas")));
+                    livroEncontrado.setCategoria(resultado.getString("categoria"));
+                    livroEncontrado.setPreco(Double.parseDouble(resultado.getString("preco")));
+                    livroEncontrado.setStatus(resultado.getBoolean("status"));;
+                   
                 }
-
+                
                 conn.fechaConexao(conexao, transacaoSQL);
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao procurar vendedor no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro na transação SQL", "Erro ao procurar livro no banco de" + "dados. \n" + e.getMessage(), JOptionPane.ERROR_MESSAGE);
                 System.out.println(e.getMessage());
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Problemas de conexão", "Não foi possível se conectar ao banco.", JOptionPane.ERROR_MESSAGE);
         }
@@ -271,5 +273,4 @@ public class LivroDAO implements iDAO<Livro> {
         this.conn = new Connect("root", "", "NovaLivraria");
         return this.conn;
     }
-
 }
